@@ -1,77 +1,36 @@
 const planos = {
-    essential: {
-        nome: "Plano Essential 300Mb",
-        preco: "R$ 99,90"
-    },
-    start: {
-        nome: "Plano Start 500Mb",
-        preco: "R$ 109,90"
-    },
-    plus: {
-        nome: "Plano Plus 600Mb",
-        preco: "R$ 129,90"
-    },
-    power: {
-        nome: "Plano Power 800Mb",
-        preco: "R$ 149,90"
-    },
-    premium: {
-        nome: "Plano Premium 1Gb",
-        preco: "R$ 199,90"
-    }
+    essential: { nome: "300Mb", preco: "R$ 99,90" },
+    start: { nome: "500Mb", preco: "R$ 109,90" },
+    plus: { nome: "600Mb", preco: "R$ 129,90" },
+    power: { nome: "800Mb", preco: "R$ 149,90" },
+    premium: { nome: "1Gb", preco: "R$ 199,90" }
 };
 
-const ordemPlanos = ["essential", "start", "plus", "power", "premium"];
+const ordem = ["essential", "start", "plus", "power", "premium"];
 
-// 🔥 USOS MAIS DETALHADOS
-const usosDetalhados = {
-    trabalho: "reuniões sem travar e envio rápido de arquivos",
-    gamer: "resposta rápida e estabilidade nos jogos",
-    streaming: "filmes e séries em alta qualidade sem travar",
-    redes: "navegação rápida em redes sociais",
-    downloads: "downloads e uploads mais rápidos",
-    estudos: "aulas online sem interrupções"
+const usos = {
+    home_office: { t: "reuniões e trabalho online", p: 3 },
+    gamer_competitivo: { t: "jogos online com resposta rápida", p: 4 },
+    streaming_alto: { t: "filmes em alta qualidade", p: 3 },
+    redes_intenso: { t: "uso intenso de redes sociais", p: 2 },
+    downloads_pesados: { t: "downloads frequentes", p: 3 },
+    estudos_online: { t: "aulas online", p: 2 },
+    casa_conectada: { t: "vários dispositivos conectados", p: 3 }
 };
 
-// 🔥 PERFIS
 const perfis = {
-    economico: "mantendo um bom custo-benefício",
-    equilibrado: "equilibrando desempenho e investimento",
-    exigente: "com foco em alta performance",
-    familia: "atendendo bem todos da casa ao mesmo tempo"
+    economico: { t: "economia", p: -2 },
+    custo_beneficio: { t: "equilíbrio", p: 0 },
+    exigente: { t: "máximo desempenho", p: 3 },
+    familia: { t: "uso compartilhado", p: 2 }
 };
 
-// 🔥 PROBLEMAS MAIS COMPLETOS
 const dores = {
-    lento: "elimina a lentidão no dia a dia",
-    trava: "evita travamentos mesmo com vários acessos",
-    instavel: "traz mais estabilidade na conexão",
-    wifi: "melhora o alcance do Wi-Fi na casa",
-    queda: "reduz quedas de conexão",
-    pico: "mantém desempenho mesmo em horários de pico"
+    lento: "lentidão",
+    trava_streaming: "travamentos em vídeos",
+    trava_jogo: "lag nos jogos",
+    wifi_fraco: "Wi-Fi fraco",
+    queda_constante: "quedas de conexão",
+    horario_pico: "queda à noite",
+    muitos_usuarios: "problemas com várias pessoas"
 };
-
-function escolherPlano(pessoas, usos, perfil) {
-
-    if (perfil === "economico") {
-        return pessoas === "1" ? "essential" : "start";
-    }
-
-    if (perfil === "exigente" || usos.includes("gamer")) return "premium";
-
-    if (pessoas === "5" || usos.includes("trabalho")) return "power";
-
-    if (usos.includes("streaming") || usos.includes("downloads")) return "plus";
-
-    return "start";
-}
-
-function sugerirPlanoAcima(planoKey) {
-    let i = ordemPlanos.indexOf(planoKey);
-    return i < ordemPlanos.length - 1 ? planos[ordemPlanos[i + 1]].nome : null;
-}
-
-function sugerirPlanoAbaixo(planoKey) {
-    let i = ordemPlanos.indexOf(planoKey);
-    return i > 0 ? planos[ordemPlanos[i - 1]].nome : null;
-}

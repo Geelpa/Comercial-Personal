@@ -1,51 +1,88 @@
+let estadoAtual = {};
+
+function escolherPlano(pessoas, usosSel, perfil) {
+    let score = 0;
+
+    usosSel.forEach(u => score += usos[u]?.p || 0);
+    if (perfil) score += perfis[perfil]?.p || 0;
+    if (pessoas == "3") score += 2;
+    if (pessoas == "5") score += 4;
+
+    if (score <= 2) return "essential";
+    if (score <= 5) return "start";
+    if (score <= 8) return "plus";
+    if (score <= 11) return "power";
+    return "premium";
+}
+
 function gerar() {
-    let usos = Array.from(document.querySelectorAll('input[type=checkbox]:checked')).map(u => u.value);
+    let usosSel = [...document.querySelectorAll('input:checked')].map(x => x.value);
     let pessoas = document.getElementById("pessoas").value;
     let perfil = document.getElementById("perfil").value;
     let dor = document.getElementById("dor").value;
 
-    let planoKey = escolherPlano(pessoas, usos, perfil);
-    let plano = planos[planoKey];
+    let key = escolherPlano(pessoas, usosSel, perfil);
 
-    let up = sugerirPlanoAcima(planoKey);
-    let down = sugerirPlanoAbaixo(planoKey);
+    estadoAtual = { key, usosSel, pessoas, perfil, dor };
 
-    let mensagem = montarMensagem(plano, usos, pessoas, perfil, dor);
+    atualizarTela();
+}
 
-    document.getElementById("planoPrincipal").innerText = plano.nome;
+function atualizarTela() {
 
-    document.getElementById("planoDown").innerText = down || "";
-    document.getElementById("planoUp").innerText = up || "";
+    let { key } = estadoAtual;
+    let plano = planos[key];
 
-    document.getElementById("resultado").innerText = mensagem;
+    let i = ordem.indexOf(key);
+
+    let downKey = i > 0 ? ordem[i - 1] : null;
+    let upKey = i < ordem.length - 1 ? ordem[i + 1] : null;
+
+    document.getElementById("principal").innerText = plano.nome;
+    document.getElementById("down").innerText = downKey ? planos[downKey].nome : "";
+    document.getElementById("up").innerText = upKey ? planos[upKey].nome : "";
+
+    estadoAtual.downKey = downKey;
+    estadoAtual.upKey = upKey;
+
+    gerarTexto();
+}
+
+function trocarPlano(tipo) {
+    if (tipo === "down" && estadoAtual.downKey) {
+        estadoAtual.key = estadoAtual.downKey;
+    }
+    if (tipo === "up" && estadoAtual.upKey) {
+        estadoAtual.key = estadoAtual.upKey;
+    }
+
+    atualizarTela();
+}
+
+function gerarTexto() {
+
+    let { key, usosSel, pessoas, dor } = estadoAtual;
+
+    let plano = planos[key];
+
+    let usosTexto = usosSel.map(u => usos[u]?.t).filter(Boolean);
+    let principalUso = usosTexto[0] || "uso comum";
+
+    let dorTexto = dor ? dores[dor] : "";
+
+    let texto = `Faz sentido ir de *${plano.nome}* no seu caso 👇
+
+👉 Principalmente porque você usa pra ${principalUso}${pessoas != "1" ? " e tem mais pessoas conectadas" : ""}
+
+👉 Isso te garante mais estabilidade e desempenho${dorTexto ? " e resolve " + dorTexto : ""}
+
+💰 ${plano.preco}/mês`;
+
+    document.getElementById("texto").innerText = texto;
     document.getElementById("resultadoBox").classList.remove("hidden");
 }
 
-function montarMensagem(plano, usos, pessoas, perfil, dor) {
-
-    let beneficios = usos.map(u => usosDetalhados[u]).filter(Boolean);
-
-    if (pessoas !== "1") {
-        beneficios.push("vários dispositivos funcionando ao mesmo tempo sem travar");
-    }
-
-    if (perfil && perfis[perfil]) {
-        beneficios.push(perfis[perfil]);
-    }
-
-    if (dor && dores[dor]) {
-        beneficios.push(dores[dor]);
-    }
-
-    let fraseBeneficio = beneficios.slice(0, 3).join(", ");
-
-    return `O *${plano.nome}* faz sentido pra você porque garante ${fraseBeneficio}.
-
-💰 ${plano.preco}/mês`;
-}
-
 function copiar() {
-    let texto = document.getElementById("resultado").innerText;
-    navigator.clipboard.writeText(texto);
-    alert("Texto copiado!");
+    navigator.clipboard.writeText(document.getElementById("texto").innerText);
+    alert("Copiado!");
 }

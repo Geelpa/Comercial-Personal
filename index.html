@@ -8,96 +8,100 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen flex items-center justify-center">
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-    <div class="bg-white w-full max-w-xl rounded-2xl shadow-xl p-6">
+    <div class="bg-white w-full max-w-2xl p-6 rounded-2xl shadow-xl">
 
-        <h1 class="text-2xl font-bold mb-1">Recomendação Inteligente</h1>
-        <p class="text-gray-500 mb-6">Monte a recomendação ideal em segundos</p>
+        <h1 class="text-2xl font-bold mb-4">Recomendação Inteligente</h1>
 
         <!-- USO -->
-        <div class="mb-5">
+        <div class="mb-4">
             <p class="font-semibold mb-2">Como o cliente usa?</p>
             <div class="grid grid-cols-2 gap-2 text-sm">
-                <label><input type="checkbox" value="trabalho"> Trabalho</label>
-                <label><input type="checkbox" value="gamer"> Gamer</label>
-                <label><input type="checkbox" value="streaming"> Streaming</label>
-                <label><input type="checkbox" value="redes"> Redes sociais</label>
-                <label><input type="checkbox" value="downloads"> Downloads</label>
-                <label><input type="checkbox" value="estudos"> Estudos</label>
+                <label><input type="checkbox" value="home_office"> Home Office</label>
+                <label><input type="checkbox" value="gamer_competitivo"> Gamer competitivo</label>
+                <label><input type="checkbox" value="streaming_alto"> Streaming HD/4K</label>
+                <label><input type="checkbox" value="redes_intenso"> Redes sociais intensas</label>
+                <label><input type="checkbox" value="downloads_pesados"> Downloads pesados</label>
+                <label><input type="checkbox" value="estudos_online"> Estudos online</label>
+                <label><input type="checkbox" value="casa_conectada"> Muitos dispositivos</label>
             </div>
         </div>
 
         <!-- PESSOAS -->
-        <div class="mb-5">
+        <div class="mb-4">
             <p class="font-semibold mb-2">Quantidade de pessoas</p>
-            <select id="pessoas" class="w-full p-2 border rounded-lg">
-                <option value="1">1–2 pessoas</option>
-                <option value="3">3–4 pessoas</option>
-                <option value="5">5+ pessoas</option>
+            <select id="pessoas" class="w-full border p-2 rounded">
+                <option value="1">1–2</option>
+                <option value="3">3–4</option>
+                <option value="5">5+</option>
             </select>
         </div>
 
         <!-- PERFIL -->
-        <div class="mb-5">
-            <p class="font-semibold mb-2">Perfil do cliente</p>
-            <select id="perfil">
+        <div class="mb-4">
+            <p class="font-semibold mb-2">Perfil</p>
+            <select id="perfil" class="w-full border p-2 rounded">
                 <option value="">Padrão</option>
                 <option value="economico">Econômico</option>
-                <option value="equilibrado">Equilibrado</option>
+                <option value="custo_beneficio">Custo-benefício</option>
                 <option value="exigente">Exigente</option>
                 <option value="familia">Família</option>
             </select>
         </div>
 
         <!-- DOR -->
-        <div class="mb-5">
-            <p class="font-semibold mb-2">Situação atual</p>
-            <select id="dor">
-                <option value="">Sem problemas</option>
-                <option value="lento">Internet lenta</option>
-                <option value="trava">Travamentos</option>
-                <option value="instavel">Instabilidade</option>
-                <option value="wifi">Wi-Fi fraco</option>
-                <option value="queda">Quedas de conexão</option>
-                <option value="pico">Horário de pico ruim</option>
+        <div class="mb-4">
+            <p class="font-semibold mb-2">Problema atual</p>
+            <select id="dor" class="w-full border p-2 rounded">
+                <option value="">Nenhum</option>
+                <option value="lento">Lentidão</option>
+                <option value="trava_streaming">Vídeos travando</option>
+                <option value="trava_jogo">Lag em jogos</option>
+                <option value="wifi_fraco">Wi-Fi fraco</option>
+                <option value="queda_constante">Quedas</option>
+                <option value="horario_pico">Piora à noite</option>
+                <option value="muitos_usuarios">Problema com várias pessoas</option>
             </select>
         </div>
 
-        <button onclick="gerar()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold">
+        <button onclick="gerar()" class="w-full bg-blue-600 text-white py-3 rounded-xl">
             Gerar recomendação
         </button>
 
         <!-- RESULTADO -->
         <div id="resultadoBox" class="hidden mt-6">
 
-            <!-- PLANOS -->
-            <div class="grid grid-cols-3 gap-3 items-center text-center mb-4">
+            <div class="grid grid-cols-3 gap-3 text-center mb-4">
 
-                <div id="planoDownBox" class="p-3 bg-gray-100 rounded-xl text-sm opacity-70">
-                    <p class="text-xs text-gray-500">Mais econômico</p>
-                    <p id="planoDown" class="font-medium"></p>
+                <!-- DOWN -->
+                <div id="downBox" onclick="trocarPlano('down')"
+                    class="bg-gray-100 p-3 rounded opacity-70 cursor-pointer hover:scale-105 transition">
+                    <p class="text-xs">Mais econômico</p>
+                    <p id="down"></p>
                 </div>
 
-                <div class="p-4 bg-blue-600 text-white rounded-xl shadow-lg scale-105">
-                    <p class="text-xs opacity-80">Recomendado</p>
-                    <p id="planoPrincipal" class="font-bold text-lg"></p>
+                <!-- PRINCIPAL -->
+                <div class="bg-blue-600 text-white p-4 rounded-xl scale-105">
+                    <p class="text-xs">Recomendado</p>
+                    <p id="principal" class="font-bold"></p>
                 </div>
 
-                <div id="planoUpBox" class="p-3 bg-gray-100 rounded-xl text-sm opacity-70">
-                    <p class="text-xs text-gray-500">Mais desempenho</p>
-                    <p id="planoUp" class="font-medium"></p>
+                <!-- UP -->
+                <div id="upBox" onclick="trocarPlano('up')"
+                    class="bg-gray-100 p-3 rounded opacity-70 cursor-pointer hover:scale-105 transition">
+                    <p class="text-xs">Mais desempenho</p>
+                    <p id="up"></p>
                 </div>
 
             </div>
 
-            <!-- TEXTO -->
-            <div class="p-4 bg-gray-50 rounded-xl border">
-                <pre id="resultado" class="whitespace-pre-wrap text-sm"></pre>
+            <div class="bg-gray-50 p-4 rounded border">
+                <pre id="texto" class="whitespace-pre-wrap text-sm"></pre>
             </div>
 
-            <button onclick="copiar()" class="mt-4 w-full bg-green-600 text-white py-2 rounded-lg">
-                Copiar texto
+            <button onclick="copiar()" class="mt-4 w-full bg-green-600 text-white py-2 rounded">
+                Copiar
             </button>
 
         </div>
