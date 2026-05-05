@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recomendador Inteligente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen flex items-center justify-center">
+
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-xl p-6">
+
+        <h1 class="text-2xl font-bold mb-1">Recomendação Inteligente</h1>
+        <p class="text-gray-500 mb-6">Monte a recomendação ideal em segundos</p>
+
+        <!-- USO -->
+        <div class="mb-5">
+            <p class="font-semibold mb-2">Como o cliente usa?</p>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+                <label><input type="checkbox" value="trabalho"> Trabalho</label>
+                <label><input type="checkbox" value="gamer"> Gamer</label>
+                <label><input type="checkbox" value="streaming"> Streaming</label>
+                <label><input type="checkbox" value="redes"> Redes sociais</label>
+                <label><input type="checkbox" value="downloads"> Downloads</label>
+                <label><input type="checkbox" value="estudos"> Estudos</label>
+            </div>
+        </div>
+
+        <!-- PESSOAS -->
+        <div class="mb-5">
+            <p class="font-semibold mb-2">Quantidade de pessoas</p>
+            <select id="pessoas" class="w-full p-2 border rounded-lg">
+                <option value="1">1–2 pessoas</option>
+                <option value="3">3–4 pessoas</option>
+                <option value="5">5+ pessoas</option>
+            </select>
+        </div>
+
+        <!-- PERFIL -->
+        <div class="mb-5">
+            <p class="font-semibold mb-2">Perfil do cliente</p>
+            <select id="perfil">
+                <option value="">Padrão</option>
+                <option value="economico">Econômico</option>
+                <option value="equilibrado">Equilibrado</option>
+                <option value="exigente">Exigente</option>
+                <option value="familia">Família</option>
+            </select>
+        </div>
+
+        <!-- DOR -->
+        <div class="mb-5">
+            <p class="font-semibold mb-2">Situação atual</p>
+            <select id="dor">
+                <option value="">Sem problemas</option>
+                <option value="lento">Internet lenta</option>
+                <option value="trava">Travamentos</option>
+                <option value="instavel">Instabilidade</option>
+                <option value="wifi">Wi-Fi fraco</option>
+                <option value="queda">Quedas de conexão</option>
+                <option value="pico">Horário de pico ruim</option>
+            </select>
+        </div>
+
+        <button onclick="gerar()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold">
+            Gerar recomendação
+        </button>
+
+        <!-- RESULTADO -->
+        <div id="resultadoBox" class="hidden mt-6">
+
+            <!-- PLANOS -->
+            <div class="grid grid-cols-3 gap-3 items-center text-center mb-4">
+
+                <div id="planoDownBox" class="p-3 bg-gray-100 rounded-xl text-sm opacity-70">
+                    <p class="text-xs text-gray-500">Mais econômico</p>
+                    <p id="planoDown" class="font-medium"></p>
+                </div>
+
+                <div class="p-4 bg-blue-600 text-white rounded-xl shadow-lg scale-105">
+                    <p class="text-xs opacity-80">Recomendado</p>
+                    <p id="planoPrincipal" class="font-bold text-lg"></p>
+                </div>
+
+                <div id="planoUpBox" class="p-3 bg-gray-100 rounded-xl text-sm opacity-70">
+                    <p class="text-xs text-gray-500">Mais desempenho</p>
+                    <p id="planoUp" class="font-medium"></p>
+                </div>
+
+            </div>
+
+            <!-- TEXTO -->
+            <div class="p-4 bg-gray-50 rounded-xl border">
+                <pre id="resultado" class="whitespace-pre-wrap text-sm"></pre>
+            </div>
+
+            <button onclick="copiar()" class="mt-4 w-full bg-green-600 text-white py-2 rounded-lg">
+                Copiar texto
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="textos.js"></script>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
