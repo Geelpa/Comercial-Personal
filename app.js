@@ -59,22 +59,63 @@ function trocarPlano(tipo) {
     atualizarTela();
 }
 
+// 🔥 NOVA FUNÇÃO COM ARGUMENTAÇÃO REAL
 function gerarTexto() {
 
     let { key, usosSel, pessoas, dor } = estadoAtual;
-
     let plano = planos[key];
 
-    let usosTexto = usosSel.map(u => usos[u]?.t).filter(Boolean);
-    let principalUso = usosTexto[0] || "uso comum";
+    let argumentos = [];
 
-    let dorTexto = dor ? dores[dor] : "";
+    // 🎯 USOS → benefício real
+    usosSel.forEach(u => {
+
+        if (u === "home_office") {
+            argumentos.push("reuniões sem travar e envio rápido de arquivos");
+        }
+
+        if (u === "gamer_competitivo") {
+            argumentos.push("resposta rápida nos jogos, sem lag");
+        }
+
+        if (u === "streaming_alto") {
+            argumentos.push("filmes e séries em alta qualidade sem travamentos");
+        }
+
+        if (u === "downloads_pesados") {
+            argumentos.push("downloads muito mais rápidos");
+        }
+
+        if (u === "casa_conectada") {
+            argumentos.push("vários dispositivos funcionando ao mesmo tempo sem perder desempenho");
+        }
+
+        if (u === "redes_intenso") {
+            argumentos.push("navegação fluida mesmo com vídeos e redes abertas");
+        }
+
+        if (u === "estudos_online") {
+            argumentos.push("aulas online estáveis sem quedas");
+        }
+
+    });
+
+    // 👥 pessoas → impacto real
+    if (pessoas != "1") {
+        argumentos.push("mantendo estabilidade mesmo com várias pessoas usando ao mesmo tempo");
+    }
+
+    // ⚠️ dor → fechamento de valor
+    if (dor) {
+        argumentos.push("resolvendo " + dores[dor]);
+    }
+
+    // 🔥 pega os 2 ou 3 melhores argumentos
+    let argumentosFinal = argumentos.slice(0, 3).join(", ");
 
     let texto = `Faz sentido ir de *${plano.nome}* no seu caso 👇
 
-👉 Principalmente porque você usa pra ${principalUso}${pessoas != "1" ? " e tem mais pessoas conectadas" : ""}
-
-👉 Isso te garante mais estabilidade e desempenho${dorTexto ? " e resolve " + dorTexto : ""}
+👉 Porque ele garante ${argumentosFinal}
 
 💰 ${plano.preco}/mês`;
 
