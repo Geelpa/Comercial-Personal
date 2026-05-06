@@ -1,17 +1,23 @@
 let estadoAtual = {};
 
 function escolherPlano(pessoas, usosSel, perfil) {
+
     let score = 0;
 
     usosSel.forEach(u => score += usos[u]?.p || 0);
     if (perfil) score += perfis[perfil]?.p || 0;
+
     if (pessoas == "3") score += 2;
     if (pessoas == "5") score += 4;
 
-    if (score <= 2) return "essential";
-    if (score <= 5) return "start";
-    if (score <= 8) return "plus";
-    if (score <= 11) return "power";
+    // 🔥 refinamento (menos rígido)
+    if (usosSel.includes("gamer_competitivo") && pessoas != "1") score += 2;
+    if (usosSel.includes("home_office") && usosSel.includes("casa_conectada")) score += 2;
+
+    if (score <= 3) return "essential";
+    if (score <= 6) return "start";
+    if (score <= 9) return "plus";
+    if (score <= 12) return "power";
     return "premium";
 }
 
@@ -59,65 +65,75 @@ function trocarPlano(tipo) {
     atualizarTela();
 }
 
-// 🔥 NOVA FUNÇÃO COM ARGUMENTAÇÃO REAL
+// 🔥 ARGUMENTAÇÃO NÍVEL VENDEDOR
 function gerarTexto() {
 
-    let { key, usosSel, pessoas, dor } = estadoAtual;
+    let { key, usosSel, pessoas, perfil, dor } = estadoAtual;
     let plano = planos[key];
 
     let argumentos = [];
+    let prioridade = "";
 
-    // 🎯 USOS → benefício real
-    usosSel.forEach(u => {
-
-        if (u === "home_office") {
-            argumentos.push("reuniões sem travar e envio rápido de arquivos");
-        }
-
-        if (u === "gamer_competitivo") {
-            argumentos.push("resposta rápida nos jogos, sem lag");
-        }
-
-        if (u === "streaming_alto") {
-            argumentos.push("filmes e séries em alta qualidade sem travamentos");
-        }
-
-        if (u === "downloads_pesados") {
-            argumentos.push("downloads muito mais rápidos");
-        }
-
-        if (u === "casa_conectada") {
-            argumentos.push("vários dispositivos funcionando ao mesmo tempo sem perder desempenho");
-        }
-
-        if (u === "redes_intenso") {
-            argumentos.push("navegação fluida mesmo com vídeos e redes abertas");
-        }
-
-        if (u === "estudos_online") {
-            argumentos.push("aulas online estáveis sem quedas");
-        }
-
-    });
-
-    // 👥 pessoas → impacto real
-    if (pessoas != "1") {
-        argumentos.push("mantendo estabilidade mesmo com várias pessoas usando ao mesmo tempo");
+    // 🎯 DETECTAR O PRINCIPAL MOTIVO
+    if (usosSel.includes("gamer_competitivo")) {
+        prioridade = "desempenho nos jogos";
+        argumentos.push("jogos com resposta rápida e sem lag");
     }
 
-    // ⚠️ dor → fechamento de valor
+    if (usosSel.includes("home_office")) {
+        prioridade = prioridade || "trabalho sem travar";
+        argumentos.push("reuniões estáveis e envio rápido de arquivos");
+    }
+
+    if (usosSel.includes("streaming_alto")) {
+        prioridade = prioridade || "streaming sem travar";
+        argumentos.push("filmes e séries em alta qualidade sem interrupções");
+    }
+
+    if (usosSel.includes("casa_conectada")) {
+        argumentos.push("vários dispositivos funcionando ao mesmo tempo sem perda de desempenho");
+    }
+
+    if (usosSel.includes("downloads_pesados")) {
+        argumentos.push("downloads e uploads muito mais rápidos");
+    }
+
+    // 👥 contexto real
+    if (pessoas != "1") {
+        argumentos.push("mantendo estabilidade mesmo com várias pessoas usando");
+    }
+
+    // ⚠️ dor → impacto forte
     if (dor) {
         argumentos.push("resolvendo " + dores[dor]);
     }
 
-    // 🔥 pega os 2 ou 3 melhores argumentos
+    // 🔥 VARIAÇÃO INTELIGENTE
+    let inicio;
+
+    if (prioridade) {
+        inicio = `Faz sentido ir de *${plano.nome}*, principalmente pelo ${prioridade} 👇`;
+    } else {
+        inicio = `O *${plano.nome}* faz mais sentido no seu cenário 👇`;
+    }
+
     let argumentosFinal = argumentos.slice(0, 3).join(", ");
 
-    let texto = `Faz sentido ir de *${plano.nome}* no seu caso 👇
+    let fechamento = "";
 
-👉 Porque ele garante ${argumentosFinal}
+    if (perfil === "economico") {
+        fechamento = "sem pesar no bolso.";
+    } else if (perfil === "exigente") {
+        fechamento = "com desempenho de sobra.";
+    } else {
+        fechamento = "sem se preocupar com a internet.";
+    }
 
-💰 ${plano.preco}/mês`;
+    let texto = `${inicio}
+
+👉 Você ganha ${argumentosFinal}
+
+💰 ${plano.preco}/mês — ${fechamento}`;
 
     document.getElementById("texto").innerText = texto;
     document.getElementById("resultadoBox").classList.remove("hidden");

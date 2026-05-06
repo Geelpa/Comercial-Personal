@@ -5,43 +5,86 @@
     <meta charset="UTF-8">
     <title>Recomendador Inteligente</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff7a1a',
+                        primaryHover: '#e86500',
+                        primarySoft: '#fff4ec'
+                    }
+                }
+            }
+        }
+    </script>
+
 </head>
 
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+<body class="bg-slate-300 min-h-screen flex items-center justify-center p-4">
 
-    <div class="bg-white w-full max-w-2xl p-6 rounded-2xl shadow-xl">
+    <div class="bg-white w-full max-w-2xl p-4 rounded-2xl shadow-xl">
 
-        <h1 class="text-2xl font-bold mb-4">Recomendação Inteligente</h1>
+        <!-- HEADER -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Recomendação Inteligente</h1>
+            <p class="text-sm text-gray-500">Monte a recomendação ideal em segundos</p>
+        </div>
 
         <!-- USO -->
-        <div class="mb-4">
-            <p class="font-semibold mb-2">Como o cliente usa?</p>
-            <div class="grid grid-cols-2 gap-2 text-sm">
-                <label><input type="checkbox" value="home_office"> Home Office</label>
-                <label><input type="checkbox" value="gamer_competitivo"> Gamer competitivo</label>
-                <label><input type="checkbox" value="streaming_alto"> Streaming HD/4K</label>
-                <label><input type="checkbox" value="redes_intenso"> Redes sociais intensas</label>
-                <label><input type="checkbox" value="downloads_pesados"> Downloads pesados</label>
-                <label><input type="checkbox" value="estudos_online"> Estudos online</label>
-                <label><input type="checkbox" value="casa_conectada"> Muitos dispositivos</label>
+        <div class="mb-3">
+            <p class="font-semibold mb-2 text-gray-700">Como o cliente usa?</p>
+
+            <div class="grid grid-cols-2 gap-1 text-sm">
+
+                <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
+                    <input type="checkbox" value="home_office"> Home Office
+                </label>
+
+                <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
+                    <input type="checkbox" value="gamer_competitivo"> Gamer competitivo
+                </label>
+
+                <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
+                    <input type="checkbox" value="streaming_alto"> Streaming HD/4K
+                </label>
+
+                <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
+                    <input type="checkbox" value="redes_intenso"> Redes sociais intensas
+                </label>
+
+                <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
+                    <input type="checkbox" value="downloads_pesados"> Downloads pesados
+                </label>
+
+                <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
+                    <input type="checkbox" value="estudos_online"> Estudos online
+                </label>
+
+                <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
+                    <input type="checkbox" value="casa_conectada"> Muitos dispositivos
+                </label>
+
             </div>
         </div>
 
         <!-- PESSOAS -->
-        <div class="mb-4">
-            <p class="font-semibold mb-2">Quantidade de pessoas</p>
-            <select id="pessoas" class="w-full border p-2 rounded">
-                <option value="1">1–2</option>
-                <option value="3">3–4</option>
-                <option value="5">5+</option>
+        <div class="mb-3">
+            <p class="font-semibold mb-2 text-gray-700">Quantidade de pessoas</p>
+            <select id="pessoas"
+                class="w-full bg-slate-200 border rounded-xl p-2 focus:ring-2 focus:ring-primary outline-none">
+                <option value="1">1–2 pessoas</option>
+                <option value="3">3–4 pessoas</option>
+                <option value="5">5+ pessoas</option>
             </select>
         </div>
 
         <!-- PERFIL -->
-        <div class="mb-4">
-            <p class="font-semibold mb-2">Perfil</p>
-            <select id="perfil" class="w-full border p-2 rounded">
+        <div class="mb-3">
+            <p class="font-semibold mb-2 text-gray-700">Perfil</p>
+            <select id="perfil"
+                class="w-full bg-slate-200 border rounded-xl p-2 focus:ring-2 focus:ring-primary outline-none">
                 <option value="">Padrão</option>
                 <option value="economico">Econômico</option>
                 <option value="custo_beneficio">Custo-benefício</option>
@@ -51,9 +94,10 @@
         </div>
 
         <!-- DOR -->
-        <div class="mb-4">
-            <p class="font-semibold mb-2">Problema atual</p>
-            <select id="dor" class="w-full border p-2 rounded">
+        <div class="mb-3">
+            <p class="font-semibold mb-2 text-gray-700">Problema atual</p>
+            <select id="dor"
+                class="w-full bg-slate-200 border rounded-xl p-2 focus:ring-2 focus:ring-primary outline-none">
                 <option value="">Nenhum</option>
                 <option value="lento">Lentidão</option>
                 <option value="trava_streaming">Vídeos travando</option>
@@ -65,43 +109,54 @@
             </select>
         </div>
 
-        <button onclick="gerar()" class="w-full bg-blue-600 text-white py-3 rounded-xl">
+        <!-- BOTÃO -->
+        <button onclick="gerar()"
+            class="w-full bg-primary hover:bg-primaryHover text-white py-2 rounded-xl font-semibold shadow-md">
             Gerar recomendação
         </button>
 
         <!-- RESULTADO -->
         <div id="resultadoBox" class="hidden mt-6">
 
-            <div class="grid grid-cols-3 gap-3 text-center mb-4">
+            <!-- PLANOS -->
+            <div class="grid grid-cols-3 gap-3 text-center mb-3">
 
                 <!-- DOWN -->
                 <div id="downBox" onclick="trocarPlano('down')"
-                    class="bg-gray-100 p-3 rounded opacity-70 cursor-pointer hover:scale-105 transition">
-                    <p class="text-xs">Mais econômico</p>
-                    <p id="down"></p>
+                    class="bg-primarySoft p-3 rounded-xl cursor-pointer hover:scale-105 transition">
+
+                    <p class="text-xs text-gray-500">Mais econômico</p>
+                    <p id="down" class="font-medium text-gray-700"></p>
                 </div>
 
                 <!-- PRINCIPAL -->
-                <div class="bg-blue-600 text-white p-4 rounded-xl scale-105">
-                    <p class="text-xs">Recomendado</p>
-                    <p id="principal" class="font-bold"></p>
+                <div class="bg-primary text-white p-4 rounded-xl shadow-lg scale-105">
+
+                    <p class="text-xs bg-white/20 inline-block px-2 py-1 rounded-md mb-1">
+                        Recomendado
+                    </p>
+
+                    <p id="principal" class="font-bold text-lg"></p>
                 </div>
 
                 <!-- UP -->
                 <div id="upBox" onclick="trocarPlano('up')"
-                    class="bg-gray-100 p-3 rounded opacity-70 cursor-pointer hover:scale-105 transition">
-                    <p class="text-xs">Mais desempenho</p>
-                    <p id="up"></p>
+                    class="bg-primarySoft p-3 rounded-xl cursor-pointer hover:scale-105 transition">
+
+                    <p class="text-xs text-gray-500">Mais desempenho</p>
+                    <p id="up" class="font-medium text-gray-700"></p>
                 </div>
 
             </div>
 
-            <div class="bg-gray-50 p-4 rounded border">
-                <pre id="texto" class="whitespace-pre-wrap text-sm"></pre>
+            <!-- TEXTO -->
+            <div class="bg-gray-50 p-4 rounded-xl border text-sm">
+                <pre id="texto" class="whitespace-pre-wrap"></pre>
             </div>
 
-            <button onclick="copiar()" class="mt-4 w-full bg-green-600 text-white py-2 rounded">
-                Copiar
+            <!-- COPIAR -->
+            <button onclick="copiar()" class="mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-1 rounded-lg">
+                Copiar texto
             </button>
 
         </div>
