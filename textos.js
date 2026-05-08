@@ -18,7 +18,7 @@ const usos = {
     gamer_competitivo: {
         intensidade: 3,
         concorrencia: 2,
-        sensibilidade: 5
+        sensibilidade: 4
     },
 
     streaming_alto: {
@@ -28,15 +28,15 @@ const usos = {
     },
 
     redes_intenso: {
-        intensidade: 0,
-        concorrencia: 0,
-        sensibilidade: 0
+        intensidade: 1,
+        concorrencia: 1,
+        sensibilidade: 1
     },
 
     estudos_online: {
         intensidade: 2,
         concorrencia: 2,
-        sensibilidade: 3
+        sensibilidade: 4
     },
 
     casa_conectada: {
@@ -45,13 +45,6 @@ const usos = {
         sensibilidade: 1
     }
 
-};
-
-const perfis = {
-    economico: { t: "economia", p: -1 },
-    custo_beneficio: { t: "equilíbrio", p: 0 },
-    exigente: { t: "máximo desempenho", p: 3 },
-    familia: { t: "uso compartilhado", p: 2 }
 };
 
 const argumentosPlano = {

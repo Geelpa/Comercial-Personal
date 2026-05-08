@@ -20,9 +20,9 @@ function escolherPlano(pessoas, usosSel, perfil) {
     if (pessoas == "5") concorrencia += 12;
 
     let score =
-        intensidade * 1.3 +
-        concorrencia * 1.1 +
-        sensibilidade * 1.5;
+        intensidade * 1.1 +
+        concorrencia * 1.2 +
+        sensibilidade * 1.3;
 
     // 🎮 gamer
     if (usosSel.includes("gamer_competitivo")) {
