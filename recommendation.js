@@ -34,11 +34,6 @@ function escolherPlano(pessoas, usosSel, perfil) {
         score += 2;
     }
 
-    // 🔥 exigente
-    if (perfil === "exigente") {
-        score += 2;
-    }
-
     let plano;
 
     if (score <= 9) {
