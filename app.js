@@ -1,43 +1,93 @@
 let estadoAtual = {};
 
+//////////////////////////////////////////////////////
+// 🧠 ESCOLHA DE PLANO
+//////////////////////////////////////////////////////
+
 function escolherPlano(pessoas, usosSel, perfil) {
 
-    let score = 0;
+    let intensidade = 0;
+    let concorrencia = 0;
+    let sensibilidade = 0;
 
-    usosSel.forEach(u => score += usos[u]?.p || 0);
-    if (perfil) score += perfis[perfil]?.p || 0;
+    usosSel.forEach(u => {
+        let uso = usos[u];
+        if (!uso) return;
 
-    if (pessoas == "3") score += 2;
-    if (pessoas == "5") score += 4;
+        intensidade += uso.intensidade;
+        concorrencia += uso.concorrencia;
+        sensibilidade += uso.sensibilidade;
+    });
 
-    // 🔥 refinamento (menos rígido)
-    if (usosSel.includes("gamer_competitivo") && pessoas != "1") score += 2;
-    if (usosSel.includes("home_office") && usosSel.includes("casa_conectada")) score += 2;
+    // 👥 pessoas
+    if (pessoas == "3") concorrencia += 2;
+    if (pessoas == "5") concorrencia += 3;
 
-    if (score <= 3) return "essential";
-    if (score <= 6) return "start";
-    if (score <= 9) return "plus";
-    if (score <= 12) return "power";
+    let score =
+        intensidade * 1.3 +
+        concorrencia * 1.1 +
+        sensibilidade * 1.5;
+
+    // ajustes
+    if (usosSel.includes("gamer_competitivo")) {
+        score += 2;
+    }
+
+    if (usosSel.includes("home_office") && pessoas != "1") {
+        score += 2;
+    }
+
+    if (perfil === "exigente") {
+        score += 2;
+    }
+
+    // 🔥 NOVA BASE = 500Mb
+    if (score <= 9) return "start";
+    if (score <= 13) return "plus";
+    if (score <= 18) return "power";
+
     return "premium";
 }
 
+//////////////////////////////////////////////////////
+// 🚀 GERAÇÃO
+//////////////////////////////////////////////////////
+
 function gerar() {
-    let usosSel = [...document.querySelectorAll('input:checked')].map(x => x.value);
+
+    let usosSel = [...document.querySelectorAll('input[type="checkbox"]:checked')]
+        .map(x => x.value);
+
     let pessoas = document.getElementById("pessoas").value;
     let perfil = document.getElementById("perfil").value;
-    let dor = document.getElementById("dor").value;
+
+    // se não existir dor no html
+    let dorEl = document.getElementById("dor");
+    let dor = dorEl ? dorEl.value : "";
 
     let key = escolherPlano(pessoas, usosSel, perfil);
 
-    estadoAtual = { key, usosSel, pessoas, perfil, dor };
+    estadoAtual = {
+        key,
+        usosSel,
+        pessoas,
+        perfil,
+        dor
+    };
 
     atualizarTela();
 }
 
+//////////////////////////////////////////////////////
+// 🖥️ TELA
+//////////////////////////////////////////////////////
+
 function atualizarTela() {
 
     let { key } = estadoAtual;
+
     let plano = planos[key];
+    if (!plano) return;
 
     let i = ordem.indexOf(key);
 
@@ -45,8 +95,12 @@ function atualizarTela() {
     let upKey = i < ordem.length - 1 ? ordem[i + 1] : null;
 
     document.getElementById("principal").innerText = plano.nome;
-    document.getElementById("down").innerText = downKey ? planos[downKey].nome : "";
-    document.getElementById("up").innerText = upKey ? planos[upKey].nome : "";
+
+    document.getElementById("down").innerText =
+        downKey ? planos[downKey].nome : "";
+
+    document.getElementById("up").innerText =
+        upKey ? planos[upKey].nome : "";
 
     estadoAtual.downKey = downKey;
     estadoAtual.upKey = upKey;
@@ -54,10 +108,16 @@ function atualizarTela() {
     gerarTexto();
 }
 
+//////////////////////////////////////////////////////
+// 🔄 TROCA MANUAL DE PLANO
+//////////////////////////////////////////////////////
+
 function trocarPlano(tipo) {
+
     if (tipo === "down" && estadoAtual.downKey) {
         estadoAtual.key = estadoAtual.downKey;
     }
+
     if (tipo === "up" && estadoAtual.upKey) {
         estadoAtual.key = estadoAtual.upKey;
     }
@@ -65,81 +125,117 @@ function trocarPlano(tipo) {
     atualizarTela();
 }
 
-// 🔥 ARGUMENTAÇÃO NÍVEL VENDEDOR
+//////////////////////////////////////////////////////
+// 🧾 TEXTO
+//////////////////////////////////////////////////////
+
 function gerarTexto() {
 
     let { key, usosSel, pessoas, perfil, dor } = estadoAtual;
+
     let plano = planos[key];
 
     let argumentos = [];
-    let prioridade = "";
-
-    // 🎯 DETECTAR O PRINCIPAL MOTIVO
-    if (usosSel.includes("gamer_competitivo")) {
-        prioridade = "desempenho nos jogos";
-        argumentos.push("jogos com resposta rápida e sem lag");
-    }
 
     if (usosSel.includes("home_office")) {
-        prioridade = prioridade || "trabalho sem travar";
-        argumentos.push("reuniões estáveis e envio rápido de arquivos");
+        argumentos.push(
+            "Você consegue participar de reuniões, acessar sistemas e enviar arquivos sem aquela sensação de internet presa nos momentos importantes."
+        );
+    }
+
+    if (usosSel.includes("gamer_competitivo")) {
+        argumentos.push(
+            "Nos jogos online, a estabilidade faz bastante diferença, principalmente em partidas competitivas."
+        );
     }
 
     if (usosSel.includes("streaming_alto")) {
-        prioridade = prioridade || "streaming sem travar";
-        argumentos.push("filmes e séries em alta qualidade sem interrupções");
+        argumentos.push(
+            "Dá pra assistir filmes e séries com tranquilidade, mesmo com outras pessoas usando ao mesmo tempo."
+        );
+    }
+
+    if (usosSel.includes("redes_intenso")) {
+        argumentos.push(
+            "O uso diário fica muito mais fluido em vídeos, redes sociais e navegação constante."
+        );
+    }
+
+    if (usosSel.includes("estudos_online")) {
+        argumentos.push(
+            "Aulas online e chamadas ficam mais estáveis, evitando travamentos em momentos importantes."
+        );
     }
 
     if (usosSel.includes("casa_conectada")) {
-        argumentos.push("vários dispositivos funcionando ao mesmo tempo sem perda de desempenho");
+        argumentos.push(
+            "Hoje é comum vários aparelhos ficarem conectados ao mesmo tempo, e isso exige mais estabilidade da internet."
+        );
     }
 
-    if (usosSel.includes("downloads_pesados")) {
-        argumentos.push("downloads e uploads muito mais rápidos");
-    }
-
-    // 👥 contexto real
     if (pessoas != "1") {
-        argumentos.push("mantendo estabilidade mesmo com várias pessoas usando");
+        argumentos.push(
+            "Como existe mais gente utilizando ao mesmo tempo, ter estabilidade acaba fazendo bastante diferença no dia a dia."
+        );
     }
 
-    // ⚠️ dor → impacto forte
-    if (dor) {
-        argumentos.push("resolvendo " + dores[dor]);
+    if (dor && dores[dor]) {
+        argumentos.push(
+            `Além disso, esse plano ajuda bastante em situações como ${dores[dor]}.`
+        );
     }
 
-    // 🔥 VARIAÇÃO INTELIGENTE
-    let inicio;
+    argumentos = argumentos.slice(0, 3);
 
-    if (prioridade) {
-        inicio = `Faz sentido ir de *${plano.nome}*, principalmente pelo ${prioridade} 👇`;
-    } else {
-        inicio = `O *${plano.nome}* faz mais sentido no seu cenário 👇`;
-    }
+    let textoArgumentos = argumentos
+        .map(a => `• ${a}`)
+        .join("\n\n");
 
-    let argumentosFinal = argumentos.slice(0, 3).join(", ");
+    let texto = `Inicio a minha recomendação com o plano de *${plano.nome}* 🚀
 
-    let fechamento = "";
+Pelo perfil de uso que você comentou, acredito que ele seja o ponto mais equilibrado entre desempenho, estabilidade e experiência no dia a dia.
 
-    if (perfil === "economico") {
-        fechamento = "sem pesar no bolso.";
-    } else if (perfil === "exigente") {
-        fechamento = "com desempenho de sobra.";
-    } else {
-        fechamento = "sem se preocupar com a internet.";
-    }
+${textoArgumentos}
 
-    let texto = `${inicio}
-
-👉 Você ganha ${argumentosFinal}
-
-💰 ${plano.preco}/mês — ${fechamento}`;
+💰 ${plano.preco}/mês`;
 
     document.getElementById("texto").innerText = texto;
-    document.getElementById("resultadoBox").classList.remove("hidden");
+
+    document
+        .getElementById("resultadoBox")
+        .classList.remove("hidden");
 }
 
+//////////////////////////////////////////////////////
+// 📋 COPIAR
+//////////////////////////////////////////////////////
+
 function copiar() {
-    navigator.clipboard.writeText(document.getElementById("texto").innerText);
+
+    navigator.clipboard.writeText(
+        document.getElementById("texto").innerText
+    );
+
     alert("Copiado!");
 }
+
+//////////////////////////////////////////////////////
+// 🚀 EVENTOS AUTOMÁTICOS
+//////////////////////////////////////////////////////
+
+window.onload = () => {
+
+    // selects
+    document.querySelectorAll("select").forEach(select => {
+        select.addEventListener("change", gerar);
+    });
+
+    // checkboxes
+    document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+        input.addEventListener("change", gerar);
+    });
+
+    // inicia automático
+    gerar();
+};
+

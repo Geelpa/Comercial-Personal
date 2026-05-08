@@ -19,7 +19,15 @@
             }
         }
     </script>
-
+    <script>
+        let debounceTimer;
+        function autoAtualizar() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                gerar();
+            }, 150); // evita múltiplos triggers rápidos
+        }
+    </script>
 </head>
 
 <body class="bg-slate-300 min-h-screen flex items-center justify-center p-4">
@@ -43,19 +51,15 @@
                 </label>
 
                 <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
-                    <input type="checkbox" value="gamer_competitivo"> Gamer competitivo
+                    <input type="checkbox" value="gamer_competitivo"> Gamer
                 </label>
 
                 <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
-                    <input type="checkbox" value="streaming_alto"> Streaming HD/4K
+                    <input type="checkbox" value="streaming_alto"> Streamings
                 </label>
 
                 <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
                     <input type="checkbox" value="redes_intenso"> Redes sociais intensas
-                </label>
-
-                <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
-                    <input type="checkbox" value="downloads_pesados"> Downloads pesados
                 </label>
 
                 <label class="flex items-center gap-1 p-1 rounded-lg hover:bg-primarySoft cursor-pointer">
@@ -92,28 +96,6 @@
                 <option value="familia">Família</option>
             </select>
         </div>
-
-        <!-- DOR -->
-        <div class="mb-3">
-            <p class="font-semibold mb-2 text-gray-700">Problema atual</p>
-            <select id="dor"
-                class="w-full bg-slate-200 border rounded-xl p-2 focus:ring-2 focus:ring-primary outline-none">
-                <option value="">Nenhum</option>
-                <option value="lento">Lentidão</option>
-                <option value="trava_streaming">Vídeos travando</option>
-                <option value="trava_jogo">Lag em jogos</option>
-                <option value="wifi_fraco">Wi-Fi fraco</option>
-                <option value="queda_constante">Quedas</option>
-                <option value="horario_pico">Piora à noite</option>
-                <option value="muitos_usuarios">Problema com várias pessoas</option>
-            </select>
-        </div>
-
-        <!-- BOTÃO -->
-        <button onclick="gerar()"
-            class="w-full bg-primary hover:bg-primaryHover text-white py-2 rounded-xl font-semibold shadow-md">
-            Gerar recomendação
-        </button>
 
         <!-- RESULTADO -->
         <div id="resultadoBox" class="hidden mt-6">
