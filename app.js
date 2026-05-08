@@ -20,3 +20,10 @@ function gerar() {
 
     atualizarTela();
 }
+
+function copiar() {
+    let texto = document
+        .getElementById("texto")
+        .innerText;
+    navigator.clipboard.writeText(texto);
+}

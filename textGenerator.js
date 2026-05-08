@@ -40,18 +40,19 @@ function gerarTexto() {
     argumentos = argumentos.slice(0, 3);
 
     let textoArgumentos = argumentos
-        .map(a => `• ${a}`)
-        .join("\n\n");
+        .map(a => `• ${a} `)
+        .join("\n");
+    return [
+        `Inicio a minha recomendação com o plano de *${plano.nome}* 🚀 
+        Segue mais detalhes:`,
 
-    return `Inicio a minha recomendação com o plano de *${plano.nome}* 🚀
+        personalidade.titulo,
 
-${personalidade.titulo}
+        personalidade.experiencia,
 
-${personalidade.experiencia}
+        textoArgumentos,
 
-${textoArgumentos}
+        personalidade.destaque
 
-${personalidade.destaque}
-
-💰 ${plano.preco}/mês`;
+    ].join("\n\n");
 }

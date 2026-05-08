@@ -16,8 +16,8 @@ function escolherPlano(pessoas, usosSel, perfil) {
     });
 
     // 👥 pessoas
-    if (pessoas == "3") concorrencia += 2;
-    if (pessoas == "5") concorrencia += 3;
+    if (pessoas == "3") concorrencia += 10;
+    if (pessoas == "5") concorrencia += 12;
 
     let score =
         intensidade * 1.3 +

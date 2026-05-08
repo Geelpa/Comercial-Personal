@@ -17,7 +17,7 @@ const usos = {
 
     gamer_competitivo: {
         intensidade: 3,
-        concorrencia: 1,
+        concorrencia: 2,
         sensibilidade: 5
     },
 
@@ -28,9 +28,9 @@ const usos = {
     },
 
     redes_intenso: {
-        intensidade: 2,
-        concorrencia: 2,
-        sensibilidade: 1
+        intensidade: 0,
+        concorrencia: 0,
+        sensibilidade: 0
     },
 
     estudos_online: {
