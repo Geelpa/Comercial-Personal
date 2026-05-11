@@ -54,5 +54,5 @@ function gerarTexto() {
 
         personalidade.destaque
 
-    ].join("\n\n");
+    ].join("\n");
 }
