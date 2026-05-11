@@ -13,7 +13,7 @@ function escolherPlano(pessoas, usosSel) {
     });
 
     // 👥 pessoas
-    if (pessoas == "1") concorrencia += 2;
+    if (pessoas == "1") concorrencia += 1;
     if (pessoas == "3") concorrencia += 4;
     if (pessoas == "5") concorrencia += 8;
 
@@ -22,8 +22,8 @@ function escolherPlano(pessoas, usosSel) {
         concorrencia * 1.2 +
         sensibilidade * 1.3;
 
-    // console.log("SCORE FINAL:", score); 
-    // console.log("---------------");
+    console.log("SCORE FINAL:", score);
+    console.log("---------------");
 
     let plano;
 

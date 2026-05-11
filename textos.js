@@ -7,19 +7,19 @@ const planos = {
 const ordem = ["start", "plus", "power", "premium"];
 const usos = {
     home_office: {
-        intensidade: 3,
+        intensidade: 1,
         concorrencia: 3,
-        sensibilidade: 3
+        sensibilidade: 1
     },
     gamer_competitivo: {
-        intensidade: 3,
-        concorrencia: 2,
+        intensidade: 2,
+        concorrencia: 3,
         sensibilidade: 1
     },
     streaming_alto: {
-        intensidade: 2,
-        concorrencia: 2,
-        sensibilidade: 1
+        intensidade: 1,
+        concorrencia: 3,
+        sensibilidade: 0
     },
     redes_intenso: {
         intensidade: 0,
@@ -27,15 +27,15 @@ const usos = {
         sensibilidade: 0
     },
     estudos_online: {
-        intensidade: 3,
-        concorrencia: 2,
-        sensibilidade: 2
-    },
-    casa_conectada: {
-        intensidade: 1,
+        intensidade: 2,
         concorrencia: 1,
         sensibilidade: 1
-    }
+    },
+    // casa_conectada: {
+    //     intensidade: 1,
+    //     concorrencia: 1,
+    //     sensibilidade: 1
+    // }
 };
 
 const argumentosPlano = {
