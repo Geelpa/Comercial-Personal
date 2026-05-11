@@ -8,32 +8,32 @@ const ordem = ["start", "plus", "power", "premium"];
 const usos = {
     home_office: {
         intensidade: 3,
-        concorrencia: 2,
-        sensibilidade: 4
+        concorrencia: 3,
+        sensibilidade: 3
     },
     gamer_competitivo: {
         intensidade: 3,
         concorrencia: 2,
-        sensibilidade: 4
+        sensibilidade: 1
     },
     streaming_alto: {
-        intensidade: 1,
-        concorrencia: 1,
+        intensidade: 2,
+        concorrencia: 2,
         sensibilidade: 1
     },
     redes_intenso: {
-        intensidade: 1,
-        concorrencia: 1,
-        sensibilidade: 1
+        intensidade: 0,
+        concorrencia: 0,
+        sensibilidade: 0
     },
     estudos_online: {
-        intensidade: 2,
+        intensidade: 3,
         concorrencia: 2,
-        sensibilidade: 4
+        sensibilidade: 2
     },
     casa_conectada: {
         intensidade: 1,
-        concorrencia: 2,
+        concorrencia: 1,
         sensibilidade: 1
     }
 };

@@ -1,9 +1,6 @@
 function atualizarTela() {
-
     let { key } = estadoAtual;
-
     let plano = planos[key];
-
     let i = ordem.indexOf(key);
 
     let downKey = i > 0 ? ordem[i - 1] : null;
