@@ -7,8 +7,8 @@ const planos = {
 const ordem = ["start", "plus", "power", "premium"];
 const usos = {
     home_office: {
-        intensidade: 1,
-        concorrencia: 3,
+        intensidade: 2,
+        concorrencia: 2,
         sensibilidade: 1
     },
     gamer_competitivo: {
@@ -30,12 +30,7 @@ const usos = {
         intensidade: 2,
         concorrencia: 1,
         sensibilidade: 1
-    },
-    // casa_conectada: {
-    //     intensidade: 1,
-    //     concorrencia: 1,
-    //     sensibilidade: 1
-    // }
+    }
 };
 
 const argumentosPlano = {

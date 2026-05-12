@@ -21,15 +21,15 @@ function gerarTexto() {
 
     if (usosSel.includes("streaming_alto")) {
         argumentos.push(
-            `Além da estabilidade para assistir conteúdos, esse perfil combina bastante com os benefícios de entretenimento inclusos.`
+            `Com estabilidade para assistir conteúdos, esse perfil combina bastante com os benefícios de entretenimento inclusos.`
         );
     }
 
-    if (usosSel.includes("casa_conectada")) {
-        argumentos.push(
-            `Hoje é comum vários aparelhos ficarem conectados ao mesmo tempo, e isso exige mais estabilidade da internet.`
-        );
-    }
+    // if (usosSel.includes("casa_conectada")) {
+    //     argumentos.push(
+    //         `Hoje é comum vários aparelhos ficarem conectados ao mesmo tempo, e isso exige mais estabilidade da internet.`
+    //     );
+    // }
 
     if (pessoas != "1") {
         argumentos.push(
