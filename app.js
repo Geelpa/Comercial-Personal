@@ -22,8 +22,25 @@ function gerar() {
 }
 
 function copiar() {
-    let texto = document
-        .getElementById("texto")
-        .innerText;
-    navigator.clipboard.writeText(texto);
+    let intro =
+        document.getElementById("textoIntro").innerText.trim();
+
+    let argumentos =
+        document.getElementById("textoArgumentos").innerText.trim();
+
+    let fechamento =
+        document.getElementById("textoFechamento").innerText.trim();
+
+    // remove blocos vazios
+    let textoFinal = [
+        intro,
+        argumentos,
+        fechamento
+    ]
+        .filter(t => t)
+        .join("\n\n");
+
+    navigator.clipboard.writeText(textoFinal);
 }
+
+

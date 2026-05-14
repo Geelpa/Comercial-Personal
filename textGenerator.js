@@ -9,46 +9,50 @@ function gerarTexto() {
 
     if (usosSel.includes("home_office")) {
         argumentos.push(
-            `Você consegue participar de reuniões e acessar sistemas sem aquela sensação de lentidão nos momentos importantes.`
+            "- Você consegue participar de reuniões e acessar sistemas sem lentidão nos momentos importantes."
         );
     }
 
     if (usosSel.includes("gamer_competitivo")) {
         argumentos.push(
-            `Nos jogos online, estabilidade faz muita diferença, principalmente em partidas competitivas.`
+            "- Jogos online ficam muito mais estáveis, principalmente em partidas competitivas."
         );
     }
 
     if (usosSel.includes("streaming_alto")) {
         argumentos.push(
-            `Com estabilidade para assistir conteúdos, esse perfil combina bastante com os benefícios de entretenimento inclusos.`
+            "- O plano já acompanha benefícios de entretenimento inclusos para aproveitar filmes e séries com mais estabilidade."
         );
     }
 
-    // if (usosSel.includes("casa_conectada")) {
-    //     argumentos.push(
-    //         `Hoje é comum vários aparelhos ficarem conectados ao mesmo tempo, e isso exige mais estabilidade da internet.`
-    //     );
-    // }
+    if (usosSel.includes("casa_conectada")) {
+        argumentos.push(
+            "- Muitos aparelhos conectados exigem mais estabilidade da internet no dia a dia."
+        );
+    }
 
     if (pessoas != "1") {
         argumentos.push(
-            `Como existe mais gente utilizando ao mesmo tempo, faz bastante diferença ter velocidade de sobra.`
+            "- Com mais pessoas utilizando ao mesmo tempo, velocidade de sobra faz bastante diferença."
         );
     }
 
     argumentos = argumentos.slice(0, 3);
 
-    let textoArgumentos = argumentos
-        .map(a => `- ${a} `)
-        .join("\n");
-    return [
-        `Inicio a minha recomendação com o plano de *${plano.nome}* 🚀 
-        Segue mais detalhes:`,
+    return {
 
-        personalidade.titulo,
-        personalidade.experiencia,
-        textoArgumentos,
-        personalidade.destaque
-    ].join("\n");
+        intro: [
+            `Minha recomendação é o plano de *${plano.nome}* 🚀`,
+            personalidade.titulo,
+            personalidade.experiencia
+        ].join("\n\n"),
+
+        argumentos: argumentos.join("\n\n"),
+
+        fechamento: [
+            personalidade.destaque
+        ].join("\n\n")
+
+    };
 }
+

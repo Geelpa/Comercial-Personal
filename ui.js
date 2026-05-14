@@ -18,8 +18,30 @@ function atualizarTela() {
     estadoAtual.downKey = downKey;
     estadoAtual.upKey = upKey;
 
-    document.getElementById("texto").innerText =
-        gerarTexto();
+    let texto = gerarTexto();
+
+    document.getElementById("textoIntro").innerText =
+        texto.intro;
+
+    document.getElementById("textoArgumentos").innerText =
+        texto.argumentos;
+
+    const argumentosEl =
+        document.getElementById("textoArgumentos");
+
+    argumentosEl.innerText = texto.argumentos;
+
+    // esconde se vazio
+    if (!texto.argumentos.trim()) {
+        argumentosEl.style.display = "none";
+    }
+    else {
+        argumentosEl.style.display = "block";
+    }
+
+    document.getElementById("textoFechamento").innerText =
+        texto.fechamento;
+
 
     document
         .getElementById("resultadoBox")
